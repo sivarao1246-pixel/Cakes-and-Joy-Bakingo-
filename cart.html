@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cart - Cakes and Joy</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+body{background:#fafafa}.top{background:red}.brand{max-width:130px}.cart-item{background:#fff;border-radius:18px;padding:16px;box-shadow:0 5px 15px rgba(0,0,0,.08)}.cart-item img{width:110px;height:110px;object-fit:cover;border-radius:14px}.summary{background:#fff;border-radius:18px;padding:22px;box-shadow:0 5px 15px rgba(0,0,0,.08);position:sticky;top:20px}.qty button{width:32px;height:32px;border:1px solid #ddd;background:#fff;border-radius:8px}.pay-btn{background:red;color:#fff;border:0}.pay-btn:hover{background:#c00;color:#fff}.form-control:focus{border-color:red;box-shadow:0 0 0 .15rem rgba(255,0,0,.12)}
+</style>
+</head>
+<body>
+<nav class="navbar top"><div class="container-fluid"><a href="index.html"><img src="./img/bakingo-logo-re.svg" class="brand" alt="Cake logo"></a><a href="index.html" class="btn btn-light fw-bold">← Continue Shopping</a></div></nav>
+<div class="container py-4">
+<h1 class="fw-bold mb-4" style="color:red">Your Cart</h1>
+<div id="empty" class="text-center bg-white rounded-4 p-5 shadow-sm" style="display:none"><h3>Your cart is empty</h3><p class="text-muted">Add some delicious cakes to continue.</p><a href="index.html" class="btn btn-danger">Shop Cakes</a></div>
+<div id="checkout" class="row g-4">
+<div class="col-lg-7"><div id="items" class="d-grid gap-3"></div></div>
+<div class="col-lg-5">
+<div class="summary">
+<h4 class="fw-bold mb-3">Delivery Details</h4>
+<form id="orderForm">
+<div class="mb-2"><label class="form-label">Full Name</label><input id="name" class="form-control" required></div>
+<div class="mb-2"><label class="form-label">Phone Number</label><input id="phone" class="form-control" type="tel" pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" required></div>
+<div class="mb-2"><label class="form-label">Delivery Address</label><textarea id="address" class="form-control" rows="3" required></textarea></div>
+<div class="mb-3"><label class="form-label">Payment Method</label><select id="payment" class="form-select" required><option value="">Choose payment</option><option>UPI</option><option>Credit / Debit Card</option><option>Cash on Delivery</option></select></div>
+<hr>
+<div class="d-flex justify-content-between"><span>Items total</span><strong id="subtotal">₹0</strong></div>
+<div class="d-flex justify-content-between"><span>Delivery</span><strong id="delivery">₹40</strong></div>
+<div class="d-flex justify-content-between"><span>GST (5%)</span><strong id="gst">₹0</strong></div>
+<div class="d-flex justify-content-between fs-4 mt-2"><strong>Total</strong><strong style="color:red" id="total">₹0</strong></div>
+<button class="btn pay-btn w-100 mt-3 py-2 fw-bold" type="submit">Place Order & Pay</button>
+</form>
+</div></div></div></div>
+<script>
+const KEY='cakesAndJoyCart';
+const money=n=>'₹'+Math.round(n).toLocaleString('en-IN');
+let cart=JSON.parse(localStorage.getItem(KEY)||'[]');
+const items=document.getElementById('items'), empty=document.getElementById('empty'), checkout=document.getElementById('checkout');
+function render(){
+ if(!cart.length){empty.style.display='block';checkout.style.display='none';return}
+ empty.style.display='none';checkout.style.display='flex';items.innerHTML='';
+ cart.forEach((p,i)=>{const el=document.createElement('div');el.className='cart-item';el.innerHTML=`<div class="d-flex gap-3 align-items-center"><img src="${p.image}" alt="${p.name}"><div class="flex-grow-1"><h5 class="fw-bold mb-1">${p.name}</h5><div class="text-muted mb-2">${p.weight?`Weight: ${p.weight}kg`:''}</div><div class="fw-bold" style="color:red">${money(p.price)}</div><div class="qty d-flex align-items-center gap-2 mt-2"><button data-action="minus">−</button><strong>${p.quantity}</strong><button data-action="plus">+</button><button data-action="remove" class="btn btn-sm btn-outline-danger ms-2">Remove</button></div></div><strong>${money(p.price*p.quantity)}</strong></div>`;el.querySelectorAll('button').forEach(b=>b.onclick=()=>change(i,b.dataset.action));items.appendChild(el)});calc();}
+function change(i,action){if(action==='plus')cart[i].quantity++;if(action==='minus')cart[i].quantity--;if(action==='remove'||cart[i].quantity<=0)cart.splice(i,1);localStorage.setItem(KEY,JSON.stringify(cart));render()}
+function calc(){const subtotal=cart.reduce((s,p)=>s+p.price*p.quantity,0),gst=subtotal*.05,delivery=subtotal?40:0,total=subtotal+gst+delivery;document.getElementById('subtotal').textContent=money(subtotal);document.getElementById('gst').textContent=money(gst);document.getElementById('delivery').textContent=money(delivery);document.getElementById('total').textContent=money(total)}
+document.getElementById('orderForm').onsubmit=e=>{e.preventDefault();if(!cart.length)return;const name=document.getElementById('name').value.trim();const payment=document.getElementById('payment').value;alert(`Order placed successfully!\n\nThank you, ${name}.\nPayment: ${payment}\nTotal: ${document.getElementById('total').textContent}`);localStorage.removeItem(KEY);cart=[];render()};render();
+</script>
+</body></html>

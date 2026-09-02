@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cakes and Joy</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+
+/* MOBILE-FIRST ADJUSTMENTS (won't change your HTML) */
+
+/* Make the two navbars adapt better */
+.navbar .container-fluid {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+/* Ensure brand image scales and doesn't overflow on small screens */
+.navbar-brand img {
+  max-width: 130px;
+  height: auto;
+  padding-left: 0.5rem;
+}
+
+/* Make the top-right icons wrap and centre on small widths */
+.navbar .d-flex.align-items-center {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Search form full width on small screens */
+@media (max-width: 767.98px) {
+  form.d-flex {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: .5rem;
+  }
+  form.d-flex input.form-control {
+    width: 100%;
+  }
+  form.d-flex .btn {
+    width: 100%;
+  }
+
+  /* Collapse the second navbar links into centered stacked items */
+  .navbar-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .navbar-nav .nav-link {
+    padding: .35rem .5rem;
+    text-align: center;
+    white-space: normal;
+    font-size: 0.95rem;
+  }
+
+  /* Reduce heading sizes & align center */
+  h1, h2, h4, h5 {
+    text-align: center;
+  }
+  h1 { font-size: 1.35rem; }
+  h2 { font-size: 1.05rem; }
+
+  /* Make the button row stack and stretch on small screens */
+  .btn.btn-primary, .btn[type="submit"] {
+    display: block;
+    width: calc(100% - 3rem);
+    max-width: 360px;
+    margin: .4rem auto;
+  }
+
+  /* Cards: make grid 2 columns on small devices, 1 on extra small */
+  .container .row.align-items-center {
+    gap: 0.9rem;
+  }
+  .container .col {
+    flex: 0 0 48%;
+    max-width: 48%;
+    margin: 0.4rem auto;
+  }
+
+  /* Make images smaller and keep aspect ratio */
+  .img-fluid.rounded-4.mb-2 {
+    height: 7rem;
+    width: 7rem;
+    object-fit: cover;
+  }
+
+  /* Reviews/cards in the pink section: stack */
+  section.py-5 .col-md-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  /* Footer subscribe input full width */
+  footer .input-group {
+    flex-direction: column;
+    gap: .5rem;
+  }
+  footer .input-group .form-control,
+  footer .input-group .btn {
+    width: 100%;
+  }
+}
+
+/* MEDIUM DEVICES (tablet) fine tuning */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .container .col {
+    flex: 0 0 48%;
+    max-width: 48%;
+  }
+  .navbar-brand img { max-width: 150px; }
+}
+
+/* DESKTOP: keep your existing visual design */
+@media (min-width: 992px) {
+  .container .col { flex: 0 0 23%; max-width: 23%; }
+}
+
+/* Minor aesthetic: keep card shadows/padding consistent */
+.p-3.shadow.rounded-4 {
+  padding: .9rem;
+}
+
+/* Small helper: keep long nav labels wrapping without overflow */
+.navbar-nav .nav-link {
+  overflow-wrap: break-word;
+}
+
+.product-card{transition:.3s;cursor:pointer;padding:1rem;background:white;border-radius:20px;box-shadow:0 5px 15px rgba(0,0,0,0.1)}
+.product-card:hover{transform:translateY(-6px);box-shadow:0 12px 25px rgba(0,0,0,0.18)}
+
+</style>
+
+  </head>
+  <body>
+  
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color:red !important;">
+  <div class="container-fluid" style="background-color:red !important;">
+    <a class="navbar-brand" href="#">
+      <img src="./img/bakingo-logo-re.svg" alt="Cake logo" style="padding-left: 1cm;">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="border-color: rgba(255,255,255,0.6);">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      </ul>
+
+      <form class="d-flex" role="search">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search for your favourite cake"
+          aria-label="Search for your favourite cake"
+        />
+        <button class="btn btn-white border" type="submit" style="background-color:rgb(255, 255, 255) !important">
+          Search
+        </button>
+      </form>
+
+      <div class="d-flex align-items-center gap-3" style="padding-left: .5cm;">
+        <a class="nav-icon" href="#" aria-label="Track order" title="Track order">
+          <img src="./img/track-order.svg" alt="Track order" width="30" height="24">
+        </a>
+
+        <a class="nav-icon" href="cart.html" aria-label="Cart" title="Cart" id="cartLink">
+          <img src="./img/shopping-cart.svg" alt="Shopping cart" width="30" height="24">
+        </a>
+
+        <a class="nav-icon" href="#" aria-label="User profile" title="User profile">
+          <img src="./img/user-profile.svg" alt="User profile" width="30" height="24">
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary" style="box-shadow: 0 6px 20px rgba(0,0,0,0.25);">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
+      <div class="navbar-nav fw-bold gap-4 text-center" style="font-size: large;">
+        <a class="nav-link active" aria-current="page" href="#">Cakes</a>
+        <a class="nav-link active" aria-current="page" href="#cakeThemes">Cakes Themes</a>
+        <a class="nav-link active" aria-current="page" href="#">Personal Cakes</a>
+        <a class="nav-link active" aria-current="page" href="#">Cakes for Parties & Events</a>
+        <a class="nav-link active" aria-current="page" href="#">Cupcakes</a>
+        <a class="nav-link active" aria-current="page" href="#">Desserts</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<br/>
+<h1 style="color: red; font-weight: bold; text-align: center;">Online Cake Delivery In Chennai !</h1>
+<br/>
+
+<button class="btn btn-primary" id="sortToggle" type="button" style="margin-left: 1.5cm; background-color: white; color: black; border: 2px solid red;">Sort by ↕</button>
+<button class="btn btn-primary sort-btn" data-sort="weight" type="button" style="background-color: white; color: black; border: 2px solid red; margin-left:.5cm;">weight</button>
+<button class="btn btn-primary sort-btn" data-sort="price" type="button" style="background-color: white; color: black; border: 2px solid red; margin-left:.5cm;">price</button>
+<button class="btn btn-primary sort-btn" data-sort="popularity" type="button" style="background-color: white; color: black; border: 2px solid red; margin-left:.5cm;">popularity</button>
+<button class="btn btn-primary sort-btn" data-sort="limited" type="button" style="background-color: white; color: black; border: 2px solid red; margin-left:.5cm;">limited</button>
+<button class="btn btn-primary sort-btn" data-sort="new" type="button" style="background-color: white; color: black; border: 2px solid red; margin-left:.5cm;">new arrivals</button>
+
+<br/>
+<br/>
+
+<br/>
+<h1 style="color: red; font-weight: bold; margin-left: 1.5cm;">Our Delicious Cakes </h1>
+<br/>
+
+<div class="container text-center">
+  <div class="row align-items-center">
+
+   <div class="col">
+  <div class="p-3 shadow rounded-4 text-center; product-card" style="background: #ffffff;">
+    <img src="./img/1 (1).webp" alt="cake 1" class="img-fluid rounded-4 mb-2" style="height: 5cm; width: 5cm; object-fit: cover;">
+    <h5 class="fw-bold">Chocolate Cake</h5>
+    <h5>Price : ₹490</h5>
+    <h5>Weight : 1kg</h5>
+    <button class="img-fluid rounded-4 mb-2" style="background-color: red;color: #ffffff; border-color: red;">Add to Cart</button>
+
+  </div>
+</div>
+
+   <div class="col">
+  <div class="p-3 shadow rounded-4 text-center; product-card" style="background: #ffffff;">
+    <img src="./img/1 (2).webp" alt="cake 1" class="img-fluid rounded-4 mb-2" style="height: 5cm; width: 5cm; object-fit: cover;">
+    <h5 class="fw-bold">Vanila Cake</h5>
+    <h5>Price : ₹380</h5>
+    <h5>Weight : 1kg</h5>
+    <button class="img-fluid rounded-4 mb-2" style="background-color: red;color: #ffffff; border-color: red;">Add to Cart</button>
+
+  </div>
+</div>
+
+   <div class="col">
+  <div class="p-3 shadow rounded-4 text-center; product-card" style="background: #ffffff;">
+    <img src="./img/1 (3).webp" alt="cake 1" class="img-fluid rounded-4 mb-2" style="height: 5cm; width: 5cm; object-fit: cover;">
+    <h5 class="fw-bold">Nutella Chocolate Cake</h5>
+    <h5>Price : ₹570</h5>
+    <h5>Weight : 1kg</h5>
+    <button class="img-fluid rounded-4 mb-2" style="background-color: red;color: #ffffff; border-color: red;">Add to Cart</button>
+  </div>
+</div>
+
+   <div class="col">
+  <div class="p-3 shadow rounded-4 text-center; product-card" style="background: #ffffff;">
+      <img src="./img/1 (4).webp" alt="cake 1" class="img-fluid rounded-4 mb-2" style="height: 5cm; width: 5cm; object-fit: cover;">
+      <h5 class="fw-bold">White forest cake</h5>
+      <h5>Price : ₹650</h5>
+      <h5>Weight : 1kg</h5>
+      <button class="img-fluid rounded-4 mb-2" style="background-color: red;color: #ffffff; border-color: red;">Add to Cart</button>
+  
+  </div>
+</div>
+
+  </div>
+</div>
+
+<br/>
+<br/>
+
+<div class="container text-center" id="cakeThemes">
+  <div class="row align-items-center">
+
+   <div class="col">
+  <div class="p-3 shadow rounded-4 text-center; product-card" style="background: #ffffff;">
+    <img src="./img/1 (7).webp" alt="cake 1" class="img-fluid rounded-4 mb-2" style="height: 5cm; width: 5cm; object-fit: cover;">
+    <h5 class="fw-bold">Spiderman cake</h5>
+    <h5>Price : ₹550</h5>
+    <h5>Weight : 1/2kg</h5>
+    <button class="img-fluid rounded-4 mb-2" style="background-color: red;color: #ffffff; border-color: red;">Add to Cart</button>
+    
+
+  </div>
+</div>
+
+   <div class="col">
+  <div class="p-3 shadow rounded-4 text-center; product-card" style="background: #ffffff;">
+    <img src="./img/1 (8).webp" alt="cake 1" class="img-fluid rounded-4 mb-2" style="height: 5cm; width: 5cm; object-fit: cover;">
+    <h5 class="fw-bold">Roblox Cake</h5>
+    <h5>Price : ₹640</h5>
+    <h5>Weight : 1kg</h5>
+    <button class="img-fluid rounded-4 mb-2" style="background-color: red;color: #ffffff; border-color: red;">Add to Cart</button>
+
+  </div>
+</div>
+
+   <div class="col">
+  <div class="p-3 shadow rounded-4 text-center; product-card" style="background: #ffffff;">
+    <img src="./img/1 (5).webp" alt="cake 1" class="img-fluid rounded-4 mb-2" style="height: 5cm; width: 5cm; object-fit: cover;">
+    <h5 class="fw-bold">Strawberry Cake</h5>
+    <h5>Price : ₹500</h5>
+    <h5>Weight : 1kg</h5>
+    <button class="img-fluid rounded-4 mb-2" style="background-color: red;color: #ffffff; border-color: red;">Add to Cart</button>
+
+  </div>
+</div>
+
+   <div class="col">
+  <div class="p-3 shadow rounded-4 text-center; product-card" style="background: #ffffff;">
+      <img src="./img/1 (6).webp" alt="cake 1" class="img-fluid rounded-4 mb-2" style="height: 5cm; width: 5cm; object-fit: cover;">
+      <h5 class="fw-bold">Fruit cake</h5>
+      <h5>Price : ₹740</h5>
+      <h5>Weight : 1kg</h5>
+      <button class="img-fluid rounded-4 mb-2" style="background-color: red;color: #ffffff; border-color: red;">Add to Cart</button>
+  
+  </div>
+</div>
+
+  </div>
+</div>
+
+
+<br/>
+<br/>
+<br/>
+<h1 style="color: red; font-weight: bold; margin-left: 1.5cm;">Our Desserts </h1>
+<br/>
+
+<div class="container text-center">
+  <div class="row align-items-center">
+
+   <div class="col">
+  <div class="p-3 shadow rounded-4 text-center; product-card" style="background: #ffffff;">
+    <img src="./img/2 (1).webp" alt="cake 1" class="img-fluid rounded-4 mb-2" style="height: 5cm; width: 5cm; object-fit: cover;">
+    <h5 class="fw-bold">Velvet Jar</h5>
+    <h5>Price : ₹120</h5>
+    <button class="img-fluid rounded-4 mb-2" style="background-color: red;color: #ffffff; border-color: red;">Add to Cart</button>
+
+  </div>
+</div>
+
+   <div class="col">
+  <div class="p-3 shadow rounded-4 text-center; product-card" style="background: #ffffff;">
+    <img src="./img/2 (2).webp" alt="cake 1" class="img-fluid rounded-4 mb-2" style="height: 5cm; width: 5cm; object-fit: cover;">
+    <h5 class="fw-bold">Cup Cakes(3)</h5>
+    <h5>Price : ₹150</h5>
+    <button class="img-fluid rounded-4 mb-2" style="background-color: red;color: #ffffff; border-color: red;">Add to Cart</button>
+
+  </div>
+</div>
+
+   <div class="col">
+  <div class="p-3 shadow rounded-4 text-center; product-card" style="background: #ffffff;">
+    <img src="./img/2 (3).webp" alt="cake 1" class="img-fluid rounded-4 mb-2" style="height: 5cm; width: 5cm; object-fit: cover;">
+    <h5 class="fw-bold">Nutella brownie</h5>
+    <h5>Price : ₹70</h5>
+    <button class="img-fluid rounded-4 mb-2" style="background-color: red;color: #ffffff; border-color: red;">Add to Cart</button>
+
+  </div>
+</div>
+
+   <div class="col">
+  <div class="p-3 shadow rounded-4 text-center; product-card" style="background: #ffffff;">
+      <img src="./img/2 (4).webp" alt="cake 1" class="img-fluid rounded-4 mb-2" style="height: 5cm; width: 5cm; object-fit: cover;">
+      <h5 class="fw-bold">Cheesecake</h5>
+      <h5>Price : ₹120</h5>
+      <button class="img-fluid rounded-4 mb-2" style="background-color: red;color: #ffffff; border-color: red;">Add to Cart</button>
+  
+  </div>
+</div>
+
+  </div>
+</div>
+
+<br/>
+<br/>
+
+<div class="container text-center">
+  <div class="row align-items-center">
+
+   <div class="col">
+  <div class="p-3 shadow rounded-4 text-center; product-card" style="background: #ffffff;">
+    <img src="./img/2.webp" alt="cake 1" class="img-fluid rounded-4 mb-2" style="height: 5cm; width: 5cm; object-fit: cover;">
+    <h5 class="fw-bold">Velvet Cupcake</h5>
+    <h5>Price : ₹70</h5>
+    <button class="img-fluid rounded-4 mb-2" style="background-color: red;color: #ffffff; border-color: red;">Add to Cart</button>
+    <br/>
+
+  </div>
+</div>
+
+   <div class="col">
+  <div class="p-3 shadow rounded-4 text-center; product-card" style="background: #ffffff;">
+    <img src="./img/2 (8).webp" alt="cake 1" class="img-fluid rounded-4 mb-2" style="height: 5cm; width: 5cm; object-fit: cover;">
+    <h5 class="fw-bold">Chocolate Cookies(10)</h5>
+    <h5>Price : ₹140</h5>
+    <button class="img-fluid rounded-4 mb-2" style="background-color: red;color: #ffffff; border-color: red;">Add to Cart</button>
+
+  </div>
+</div>
+
+   <div class="col">
+  <div class="p-3 shadow rounded-4 text-center; product-card" style="background: #ffffff;">
+    <img src="./img/2 (5).webp" alt="cake 1" class="img-fluid rounded-4 mb-2" style="height: 5cm; width: 5cm; object-fit: cover;">
+    <h5 class="fw-bold">Choco-lava Cake</h5>
+    <h5>Price : ₹150</h5>
+    <button class="img-fluid rounded-4 mb-2" style="background-color: red;color: #ffffff; border-color: red;">Add to Cart</button>
+    <br/>
+
+  </div>
+</div>
+
+   <div class="col">
+  <div class="p-3 shadow rounded-4 text-center; product-card" style="background: #ffffff;">
+      <img src="./img/2 (6).webp" alt="cake 1" class="img-fluid rounded-4 mb-2" style="height: 5cm; width: 5cm; object-fit: cover;">
+      <h5 class="fw-bold">Cheese jar-cake</h5>
+      <h5>Price : ₹140</h5>
+      <button class="img-fluid rounded-4 mb-2" style="background-color: red;color: #ffffff; border-color: red;">Add to Cart</button>
+      <br/>
+  
+  </div>
+</div>
+
+  </div>
+</div>
+
+<br/>
+<br/>
+
+<section class="py-5" style="background:#ffd3dd;">
+  <div class="container">
+    <h4 class="mb-4 fw-bold">⭐ 4.8 <span class="text-muted">(1.6K Reviews)</span></h4>
+    <div class="row g-4">
+
+      <div class="col-md-4">
+        <div class="p-4 bg-white rounded shadow-sm h-100">
+             <div class="text-center fw-semibold">Nagma <span class="text-primary">✔ Verified</span></div>
+               <div class="text-center text-success fs-5 mb-2">★★★★★</div>
+          <p class="text-center fw-semibold">"Excellent Experience with bakingo"</p>
+          <p class="text-center text-danger fw-bold">Blueberry Jar Cake</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="p-4 bg-white rounded shadow-sm h-100">
+            <div class="text-center fw-semibold">Chitra Iyer <span class="text-primary">✔ Verified</span></div>
+          <div class="text-center text-success fs-5 mb-2">★★★★★</div>
+          <p class="text-center">"The pastries were tasty, especially the lemon cheesecake mousse was the show stealer."</p>
+          <p class="text-center text-danger fw-bold">Lemon Cheesecake Mousse Verrine Cup</p>              
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="p-4 bg-white rounded shadow-sm h-100">
+            <div class="text-center fw-semibold">Jitendra Mahajan <span class="text-primary">✔ Verified</span></div>
+          <div class="text-center text-success fs-5 mb-2">★★★★★</div>
+          <p class="text-center fw-semibold">"Tasty and yummy"</p>
+          <p class="text-center text-danger fw-bold">Nutella Hazelnut Jar</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<br/>
+<h2 style="color: rgb(255, 52, 52); text-align: center;">Shop the Best Cupcakes Online From Bakingo – Fresh, Sweet & Irresistible</h2>
+<br/>
+
+<footer class="pt-5 pb-4" style="background:#ffe7d9;">
+  <div class="container">
+
+    <div class="row mb-5">
+      <div class="col-md-6">
+        <h3 class="fw-bold text-danger">SUBSCRIBE TO OUR NEWSLETTER</h3>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="email" class="form-control border-danger" placeholder="Enter Email Address">
+          <button class="btn btn-danger">→</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <a class="navbar-brand" href="#">
+        <img src="./img/red.svg" alt="Cake logo" style=" 
+        height: 40px; width: 130px;">
+    </a>
+        <p class="text-muted" >  © 2025</p>
+
+        <div class="d-flex gap-3 fs-4 text-danger">
+          <i class="bi bi-facebook"></i>
+          <i class="bi bi-instagram"></i>
+          <i class="bi bi-twitter"></i>
+          <i class="bi bi-linkedin"></i>
+          <i class="bi bi-youtube"></i>
+        </div>
+      </div>
+
+      <div class="col-md-2 mb-4">
+        <h5 class="fw-bold text-danger">KNOW US</h5>
+        <ul class="list-unstyled mt-3">
+          <li><a href="#" class="text-dark text-decoration-none">Our Story</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">Contact Us</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">Locate Us</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">Blog</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">Media</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">Careers</a></li>
+        </ul>
+      </div>
+
+      <div class="col-md-3 mb-4">
+        <h5 class="fw-bold text-danger">NEED HELP</h5>
+        <ul class="list-unstyled mt-3">
+          <li><a href="#" class="text-dark text-decoration-none">FAQ</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">Cancellation & Refund</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">Privacy Policy</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">Terms & Conditions</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">Customer Grievance</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">Sitemap</a></li>
+        </ul>
+      </div>
+
+      <div class="col-md-3 mb-4">
+        <h5 class="fw-bold text-danger">MORE INFO</h5>
+        <ul class="list-unstyled mt-3">
+          <li><a href="#" class="text-dark text-decoration-none">Corporate Cakes</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">Coupons & Offers</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">Download App</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
