@@ -7,30 +7,20 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <style>
-
-/* MOBILE-FIRST ADJUSTMENTS (won't change your HTML) */
-
-/* Make the two navbars adapt better */
 .navbar .container-fluid {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
 }
-
-/* Ensure brand image scales and doesn't overflow on small screens */
 .navbar-brand img {
   max-width: 130px;
   height: auto;
   padding-left: 0.5rem;
 }
-
-/* Make the top-right icons wrap and centre on small widths */
 .navbar .d-flex.align-items-center {
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.5rem;
 }
-
-/* Search form full width on small screens */
 @media (max-width: 767.98px) {
   form.d-flex {
     flex-direction: column;
@@ -44,8 +34,6 @@
   form.d-flex .btn {
     width: 100%;
   }
-
-  /* Collapse the second navbar links into centered stacked items */
   .navbar-nav {
     flex-wrap: wrap;
     justify-content: center;
@@ -56,23 +44,17 @@
     white-space: normal;
     font-size: 0.95rem;
   }
-
-  /* Reduce heading sizes & align center */
   h1, h2, h4, h5 {
     text-align: center;
   }
   h1 { font-size: 1.35rem; }
   h2 { font-size: 1.05rem; }
-
-  /* Make the button row stack and stretch on small screens */
   .btn.btn-primary, .btn[type="submit"] {
     display: block;
     width: calc(100% - 3rem);
     max-width: 360px;
     margin: .4rem auto;
   }
-
-  /* Cards: make grid 2 columns on small devices, 1 on extra small */
   .container .row.align-items-center {
     gap: 0.9rem;
   }
@@ -81,21 +63,15 @@
     max-width: 48%;
     margin: 0.4rem auto;
   }
-
-  /* Make images smaller and keep aspect ratio */
   .img-fluid.rounded-4.mb-2 {
     height: 7rem;
     width: 7rem;
     object-fit: cover;
   }
-
-  /* Reviews/cards in the pink section: stack */
   section.py-5 .col-md-4 {
     flex: 0 0 100%;
     max-width: 100%;
   }
-
-  /* Footer subscribe input full width */
   footer .input-group {
     flex-direction: column;
     gap: .5rem;
@@ -105,8 +81,6 @@
     width: 100%;
   }
 }
-
-/* MEDIUM DEVICES (tablet) fine tuning */
 @media (min-width: 768px) and (max-width: 991.98px) {
   .container .col {
     flex: 0 0 48%;
@@ -114,22 +88,15 @@
   }
   .navbar-brand img { max-width: 150px; }
 }
-
-/* DESKTOP: keep your existing visual design */
 @media (min-width: 992px) {
   .container .col { flex: 0 0 23%; max-width: 23%; }
 }
-
-/* Minor aesthetic: keep card shadows/padding consistent */
 .p-3.shadow.rounded-4 {
   padding: .9rem;
 }
-
-/* Small helper: keep long nav labels wrapping without overflow */
 .navbar-nav .nav-link {
   overflow-wrap: break-word;
 }
-
 .product-card{transition:.3s;cursor:pointer;padding:1rem;background:white;border-radius:20px;box-shadow:0 5px 15px rgba(0,0,0,0.1)}
 .product-card:hover{transform:translateY(-6px);box-shadow:0 12px 25px rgba(0,0,0,0.18)}
 
